@@ -1,0 +1,55 @@
+{% extends 'ProductBundle:Admin:base.html.twig' %}
+
+{% block content %}
+    <h1>Seos list</h1>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-stripped table-condensed">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for seo in seos %}
+                <tr>
+                    <td>
+                        <a href="{{ path('seo_show', { 'id': seo.id }) }}">
+                            {{ seo.id }}
+                        </a>
+                    </td>
+                    <td>{{ seo.title }}</td>
+                    <td>{{ seo.description }}</td>
+                    <td>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="{{ path('seo_show', { 'id': seo.id }) }}"
+                                    class="btn btn-xs btn-primary">
+                                    Show
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('seo_edit', { 'id': seo.id }) }}"
+                                    class="btn btn-xs btn-warning">
+                                    Edit
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('seo_new') }}" class="btn btn-sm btn-success">
+                Create a new seo
+            </a>
+        </li>
+    </ul>
+{% endblock %}

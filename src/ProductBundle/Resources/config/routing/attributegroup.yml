@@ -1,0 +1,24 @@
+attributegroup_index:
+    path:     /
+    defaults: { _controller: "ProductBundle:AttributeGroup:index" }
+    methods:  GET
+
+attributegroup_show:
+    path:     /{id}/show
+    defaults: { _controller: "ProductBundle:AttributeGroup:show" }
+    methods:  GET
+
+attributegroup_new:
+    path:     /new
+    defaults: { _controller: "ProductBundle:AttributeGroup:new" }
+    methods:  [GET, POST]
+
+attributegroup_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ProductBundle:AttributeGroup:edit" }
+    methods:  [GET, POST]
+
+attributegroup_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ProductBundle:AttributeGroup:delete" }
+    methods:  DELETE
