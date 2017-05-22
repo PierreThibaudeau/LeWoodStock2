@@ -14,6 +14,10 @@
                 <td>{{ product.designation }}</td>
             </tr>
             <tr>
+                <th>Image</th>
+                <img src="{{ asset('uploads/images/' ~ product.image.url) }}" alt="{{ product.image.alt }}">
+            </tr>
+            <tr>
                 <th>Description</th>
                 <td>{{ product.description }}</td>
             </tr>

@@ -18,7 +18,6 @@ class AppKernel extends Kernel
 
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
 
-            new HelloBundle\HelloBundle(),
             new ProductBundle\ProductBundle(),
         );
 

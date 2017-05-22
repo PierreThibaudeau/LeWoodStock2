@@ -1,0 +1,24 @@
+admin_image_index:
+    path:     /
+    defaults: { _controller: "ProductBundle:Admin/Image:index" }
+    methods:  GET
+
+admin_image_show:
+    path:     /{id}/show
+    defaults: { _controller: "ProductBundle:Admin/Image:show" }
+    methods:  GET
+
+admin_image_new:
+    path:     /new
+    defaults: { _controller: "ProductBundle:Admin/Image:new" }
+    methods:  [GET, POST]
+
+admin_image_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ProductBundle:Admin/Image:edit" }
+    methods:  [GET, POST]
+
+admin_image_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ProductBundle:Admin/Image:delete" }
+    methods:  DELETE

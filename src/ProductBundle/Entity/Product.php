@@ -21,6 +21,10 @@ class Product
      * @var Seo
      */
     private $seo;
+    /**
+     * @var Image
+     */
+    private $image;
 
     /**
      * @var Category
@@ -69,6 +73,7 @@ class Product
     public function __construct()
     {
         $this->seo = new Seo();
+        $this->image = new Image();
         $this->attributes = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
@@ -98,6 +103,23 @@ class Product
     public function setSeo(Seo $seo)
     {
         $this->seo = $seo;
+        return $this;
+    }
+    /**
+     * @return Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Image $image
+     * @return Product
+     */
+    public function setImage(Image $image)
+    {
+        $this->image = $image;
         return $this;
     }
 

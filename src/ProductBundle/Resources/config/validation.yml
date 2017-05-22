@@ -37,6 +37,17 @@ ProductBundle\Entity\Seo:
                 min: 3
                 max: 255
 
+ProductBundle\Entity\Image:
+    properties:
+        url:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        alt:
+            - NotBlank: ~
+            - Length:
+                max: 255
+
 ProductBundle\Entity\Category:
     properties:
         name:

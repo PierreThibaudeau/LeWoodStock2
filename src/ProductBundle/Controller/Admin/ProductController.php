@@ -46,9 +46,17 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush($product);
 
+
+            $file = $product->getImage()->getUrl();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $dir = $this->getParameter('kernel.root_dir') . '/../web/uploads/images';
+            // Move the file to the directory
+            $file->move($dir, $fileName);
+            $product->getImage()->setUrl($fileName);
+
+            $em->persist($product);
+            $em->flush();
             return $this->redirectToRoute('admin_product_show', array('id' => $product->getId()));
         }
 

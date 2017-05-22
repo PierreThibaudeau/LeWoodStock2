@@ -1,7 +1,7 @@
-HelloBundle\Entity\Seo:
+ProductBundle\Entity\Image:
     type: entity
-    table: hello_seo
-    repositoryClass: HelloBundle\Repository\SeoRepository
+    table: null
+    repositoryClass: ProductBundle\Repository\ImageRepository
     id:
         id:
             type: integer
@@ -9,9 +9,10 @@ HelloBundle\Entity\Seo:
             generator:
                 strategy: AUTO
     fields:
-        title:
+        url:
             type: string
             length: 255
-        description:
-            type: text
+        alt:
+            type: string
+            length: 255
     lifecycleCallbacks: {  }

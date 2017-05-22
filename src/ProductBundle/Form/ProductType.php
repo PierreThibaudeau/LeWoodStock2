@@ -26,6 +26,9 @@ class ProductType extends AbstractType
                 'class'        => Category::class,
                 'choice_label' => 'name',
             ])
+            ->add('image', ImageType::class, [
+                'label' => 'Image',
+            ])
             ->add('attributes', EntityType::class, [
                 'label'        => 'Attributs',
                 'class'        => Attribute::class,

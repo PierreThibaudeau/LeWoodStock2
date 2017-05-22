@@ -19,4 +19,8 @@ admin_product:
     resource: admin/product.yml
     prefix:   /product
 
+admin_image:
+    resource: admin/image.yml
+    prefix:   /image
+
 

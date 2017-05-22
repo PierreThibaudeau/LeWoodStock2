@@ -1,6 +1,3 @@
 product:
     resource: "@ProductBundle/Resources/config/routing.yml"
 
-hello:
-    resource: "@HelloBundle/Controller/"
-    type:     annotation

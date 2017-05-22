@@ -1,3 +1,7 @@
+product_admin_image:
+    resource: "@ProductBundle/Resources/config/routing/image.yml"
+    prefix:   /admin/image
+
 logout:
     path: /logout
 login:
