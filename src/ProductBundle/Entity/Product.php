@@ -2,350 +2,373 @@
 
 namespace ProductBundle\Entity;
 
-use Behat\Transliterator\Transliterator;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Behat\Transliterator\Transliterator;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * Product
  */
-class Product
-{
-    /**
-     * @var int
-     */
-    private $id;
+class Product {
+  /**
+   * @var int
+   */
+  private $id;
 
-    /**
-     * @var Seo
-     */
-    private $seo;
-    /**
-     * @var Image
-     */
-    private $image;
+  /**
+   * @var Seo
+   */
+  private $seo;
 
-    /**
-     * @var Category
-     */
-    private $category;
+  /**
+   * @var ArrayCollection
+   */
+  private $images;
 
-    /**
-     * @var ArrayCollection
-     */
-    private $attributes;
+  /**
+   * @var Category
+   */
+  private $category;
 
-    /**
-     * @var string
-     */
-    private $designation;
+  /**
+   * @var ArrayCollection
+   */
+  private $attributes;
 
-    /**
-     * @var string
-     */
-    private $description;
+  /**
+   * @var string
+   */
+  private $designation;
 
-    /**
-     * @var float
-     */
-    private $price;
+  /**
+   * @var string
+   */
+  private $description;
 
-    /**
-     * @var int
-     */
-    private $stock;
+  /**
+   * @var float
+   */
+  private $price;
 
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
+  /**
+   * @var int
+   */
+  private $stock;
 
-    /**
-     * @var string
-     */
-    private $slug;
+  /**
+   * @var \DateTime
+   */
+  private $createdAt;
+
+  /**
+   * @var string
+   */
+  private $slug;
 
 
-    /**
-     * Product constructor.
-     */
-    public function __construct()
-    {
-        $this->seo = new Seo();
-        $this->image = new Image();
-        $this->attributes = new ArrayCollection();
-        $this->createdAt = new \DateTime();
+  /**
+   * Product constructor.
+   */
+  public function __construct()
+  {
+    $this->seo = new Seo();
+    $this->image = new Image();
+    $this->attributes = new ArrayCollection();
+    $this->createdAt = new \DateTime();
+  }
+
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  /**
+   * @return Seo
+   */
+  public function getSeo()
+  {
+    return $this->seo;
+  }
+
+  /**
+   * @param Seo $seo
+   * @return Product
+   */
+  public function setSeo(Seo $seo)
+  {
+    $this->seo = $seo;
+    return $this;
+  }
+
+  /**
+   * @return Category
+   */
+  public function getCategory()
+  {
+    return $this->category;
+  }
+
+  /**
+   * @param Category $category
+   * @return Product
+   */
+  public function setCategory(Category $category = null)
+  {
+    if($category !== $this->category) {
+      $this->category = $category;
+
+      if(!$category) {
+        $category->addProduct($this);
+      }
     }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
+    return $this;
+  }
+
+  /**
+   * Adds the attribute.
+   * @param Attribute $attribute
+   * @return $this
+   */
+  public function addAttribute(Attribute $attribute)
+  {
+    if(!$this->attributes->contains($attribute)) {
+      $this->attributes->add($attribute);
     }
 
-    /**
-     * @return Seo
-     */
-    public function getSeo()
-    {
-        return $this->seo;
+    return $this;
+  }
+
+  /**
+   * Removes the attribute.
+   * @param Attribute $attribute
+   * @return $this
+   */
+  public function removeAttribute(Attribute $attribute)
+  {
+    if($this->attributes->contains($attribute)) {
+      $this->attributes->removeElement($attribute);
     }
 
-    /**
-     * @param Seo $seo
-     * @return Product
-     */
-    public function setSeo(Seo $seo)
-    {
-        $this->seo = $seo;
-        return $this;
-    }
-    /**
-     * @return Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
+    return $this;
+  }
 
-    /**
-     * @param Image $image
-     * @return Product
-     */
-    public function setImage(Image $image)
-    {
-        $this->image = $image;
-        return $this;
+  /**
+   * @return ArrayCollection
+   */
+  public function getAttributes()
+  {
+    return $this->attributes;
+  }
+
+  /**
+   * Adds the image.
+   * @param Image $image
+   * @return $this
+   */
+  public function addImage(Image $image)
+  {
+    if(!$this->images->contains($image)) {
+      $this->images->add($image);
+      $image->setProduct($this);
     }
 
-    /**
-     * @return Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
+    return $this;
+  }
+
+  /**
+   * Removes the image.
+   * @param Image $image
+   * @return $this
+   */
+  public function removeImage(Image $image)
+  {
+    if($this->images->contains($image)) {
+      $this->images->removeElement($image);
+      $image->setProduct(null);
+
     }
 
-    /**
-     * @param Category $category
-     * @return Product
-     */
-    public function setCategory(Category $category = null)
-    {
-        if ($category !== $this->category) {
-            $this->category = $category;
+    return $this;
+  }
 
-            if (!$category) {
-                $category->addProduct($this);
-            }
-        }
+  /**
+   * @return ArrayCollection
+   */
+  public function getImages()
+  {
+    return $this->images;
+  }
 
-        return $this;
-    }
+  /**
+   * Set designation
+   *
+   * @param string $designation
+   * @return $this
+   */
+  public function setDesignation($designation)
+  {
+    $this->designation = $designation;
 
-    /**
-     * Adds the attribute.
-     * @param Attribute $attribute
-     * @return $this
-     */
-    public function addAttribute(Attribute $attribute)
-    {
-        if (!$this->attributes->contains($attribute)) {
-            $this->attributes->add($attribute);
-        }
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get designation
+   *
+   * @return string
+   */
+  public function getDesignation()
+  {
+    return $this->designation;
+  }
 
-    /**
-     * Removes the attribute.
-     * @param Attribute $attribute
-     * @return $this
-     */
-    public function removeAttribute(Attribute $attribute)
-    {
-        if ($this->attributes->contains($attribute)) {
-            $this->attributes->removeElement($attribute);
-        }
+  /**
+   * Set description
+   *
+   * @param string $description
+   * @return Product
+   */
+  public function setDescription($description)
+  {
+    $this->description = $description;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
+  /**
+   * Get description
+   *
+   * @return string
+   */
+  public function getDescription()
+  {
+    return $this->description;
+  }
 
-    /**
-     * Set designation
-     *
-     * @param string $designation
-     * @return $this
-     */
-    public function setDesignation($designation)
-    {
-        $this->designation = $designation;
+  /**
+   * Set price
+   *
+   * @param float $price
+   * @return Product
+   */
+  public function setPrice($price)
+  {
+    $this->price = $price;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get designation
-     *
-     * @return string 
-     */
-    public function getDesignation()
-    {
-        return $this->designation;
-    }
+  /**
+   * Get price
+   *
+   * @return float
+   */
+  public function getPrice()
+  {
+    return $this->price;
+  }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Product
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
+  /**
+   * Set stock
+   *
+   * @param int $stock
+   * @return Product
+   */
+  public function setStock($stock)
+  {
+    $this->stock = $stock;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+  /**
+   * Get stock
+   *
+   * @return int
+   */
+  public function getStock()
+  {
+    return $this->stock;
+  }
 
-    /**
-     * Set price
-     *
-     * @param float $price
-     * @return Product
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
+  /**
+   * Set created at
+   *
+   * @param \DateTime $createdAt
+   * @return Product
+   */
+  public function setCreatedAt(\DateTime $createdAt)
+  {
+    $this->createdAt = $createdAt;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
+  /**
+   * Get created at
+   *
+   * @return \DateTime
+   */
+  public function getCreatedAt()
+  {
+    return $this->createdAt;
+  }
 
-    /**
-     * Set stock
-     *
-     * @param int $stock
-     * @return Product
-     */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
+  /**
+   * Get slug
+   *
+   * @return string
+   */
+  public function getSlug()
+  {
+    return $this->slug;
+  }
 
-        return $this;
-    }
+  /**
+   * Set slug
+   *
+   * @param string $slug
+   * @return Product
+   */
+  public function setSlug($slug)
+  {
+    $this->slug = $slug;
+    return $this;
+  }
 
-    /**
-     * Get stock
-     *
-     * @return int
-     */
-    public function getStock()
-    {
-        return $this->stock;
-    }
+  /**
+   * Pre persist lifecycle callback.
+   *
+   * @param LifecycleEventArgs $eventArgs
+   */
+  public function onPrePersist(LifecycleEventArgs $eventArgs)
+  {
+    $this->generateSlug();
+  }
 
-    /**
-     * Set created at
-     *
-     * @param \DateTime $createdAt
-     * @return Product
-     */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
+  /**
+   * Pre update lifecycle callback.
+   *
+   * @param PreUpdateEventArgs $eventArgs
+   */
+  public function onPreUpdate(PreUpdateEventArgs $eventArgs)
+  {
+    $this->generateSlug();
+  }
 
-        return $this;
-    }
-
-    /**
-     * Get created at
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Product
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-        return $this;
-    }
-
-    /**
-     * Pre persist lifecycle callback.
-     *
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function onPrePersist(LifecycleEventArgs $eventArgs)
-    {
-        $this->generateSlug();
-    }
-
-    /**
-     * Pre update lifecycle callback.
-     *
-     * @param PreUpdateEventArgs $eventArgs
-     */
-    public function onPreUpdate(PreUpdateEventArgs $eventArgs)
-    {
-        $this->generateSlug();
-    }
-
-    /**
-     * Generates the slug.
-     */
-    private function generateSlug()
-    {
-        $this->slug = Transliterator::urlize($this->designation);
-    }
+  /**
+   * Generates the slug.
+   */
+  private function generateSlug()
+  {
+    $this->slug = Transliterator::urlize($this->designation);
+  }
 }

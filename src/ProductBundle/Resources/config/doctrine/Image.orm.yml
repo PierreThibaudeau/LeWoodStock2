@@ -9,10 +9,23 @@ ProductBundle\Entity\Image:
             generator:
                 strategy: AUTO
     fields:
+        designation:
+            type: string
+            length: 255
         url:
             type: string
             length: 255
         alt:
             type: string
             length: 255
-    lifecycleCallbacks: {  }
+    manyToOne:
+        product:
+            targetEntity: ProductBundle\Entity\Product
+            inversedBy: images
+            joinColumn:
+                name: product_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: RESTRICT
+    lifecycleCallbacks: { }
+

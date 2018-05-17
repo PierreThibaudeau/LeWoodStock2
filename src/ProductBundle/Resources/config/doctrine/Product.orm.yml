@@ -30,9 +30,6 @@ ProductBundle\Entity\Product:
         seo:
           targetEntity: ProductBundle\Entity\Seo
           cascade: ['persist', 'remove']
-        image:
-          targetEntity: ProductBundle\Entity\Image
-          cascade: ['persist', 'remove']
     manyToOne:
         category:
             targetEntity: ProductBundle\Entity\Category
@@ -42,6 +39,10 @@ ProductBundle\Entity\Product:
                 referencedColumnName: id
                 nullable: false
                 onDelete: RESTRICT
+    oneToMany:
+            images:
+                targetEntity: ProductBundle\Entity\Image
+                mappedBy: product
     manyToMany:
         attributes:
             targetEntity: ProductBundle\Entity\Attribute

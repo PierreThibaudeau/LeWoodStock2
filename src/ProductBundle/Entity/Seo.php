@@ -2,6 +2,11 @@
 
 namespace ProductBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Behat\Transliterator\Transliterator;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 /**
  * Seo
  */

@@ -3,7 +3,6 @@
 namespace ProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use ProductBundle\Entity\Attribute;
 
 /**
  * ProductRepository

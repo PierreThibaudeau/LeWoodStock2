@@ -46,6 +46,14 @@ class ImageController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $file = $image->getUrl();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $dir = $this->getParameter('kernel.root_dir') . '/../web/uploads/images';
+            // Move the file to the directory
+            $file->move($dir, $fileName);
+            $image->setUrl($fileName);
+
             $em->persist($image);
             $em->flush($image);
 
@@ -117,7 +125,7 @@ class ImageController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('image_index');
+        return $this->redirectToRoute('admin_image_index');
     }
 
     /**
